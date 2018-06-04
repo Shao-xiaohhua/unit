@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>飘窗</title>
+</head>
+<style>
+  html, body {
+    position: relative;
+    width: 100%;
+    height: 1500px;
+    margin: 0;
+    padding: 0;
+    background: black;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  .pc-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 300px;
+    background: red;
+    background-size: 100% 100%;
+    z-index: 8888;
+  }
+  .pc-wrap .iner-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .pc-wrap .cont-name {
+    position: absolute;
+    left: 0;
+    bottom: -40px;
+    width: 100%;
+    height: 40px;
+    background: blue;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    font-size: 14px;
+  }
+</style>
+<body>
+  <div class="pc-wrap">
+    <div class="iner-wrap"></div>
+    <div class="cont-name">欢迎关注上海法院12368微信公众号</div>
+  </div>
+  <script src="jquery-1.11.3.js"></script>
+  <script>
+    $(function () {
+      var move = $('.pc-wrap');
+      var leftSwite = 'right';
+      var topSwite = 'down';
+      var wWidth = $(window).width();
+      var wHeight = $(window).height();
+      var scrollHeight = 0;
+      $(window).on('resize', function () {
+        wWidth = $(window).width();
+        wHeight = $(window).height();
+      });
+      $(window).scroll(function () {
+        var that = $(this);
+        scrollHeight = that.scrollTop();
+      });
+      var pcMove = function () {
+        var left = move.offset().left;
+        var top = move.offset().top;
+        if (leftSwite === 'right') {
+          if (left > wWidth - 305) {
+            leftSwite = 'left';
+          }
+        } else {
+          if (left < 0) {
+            leftSwite = 'right';
+          }
+        }
+        if (topSwite === 'down') {
+          if (top > (wHeight + scrollHeight) - 345) {
+            topSwite = 'top'
+          }
+        } else {
+          if (top < scrollHeight) {
+            topSwite = 'down'
+          }
+        }
+        if (leftSwite === 'right') {
+          left++;
+        } else {
+          left--;
+        }
+        if (topSwite === 'down') {
+          top++
+        } else {
+          top--
+        };
+        move.css({'top': top + 'px'});
+        move.css({'left': left + 'px'});
+      };
+      var t = setInterval(pcMove, 10);
+      move.on('mouseover', function () {
+        clearInterval(t);
+      });
+      move.on('mouseout', function () {
+        t = setInterval(pcMove, 10);
+      });
+    });
+  </script>
+</body>
+</html>
