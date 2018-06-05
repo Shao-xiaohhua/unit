@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    {
+      "name": "package.json",
+      "program": "cnpm install"
+    },
+    ["src", "static"]
+  ],
+  "dependencies": ["package.json"],
+  "cache": "dist/.ci-task-runner-cache.json",
+  "repository": "git",
+  "program": "cd ${taskPath} && npm run build"
+}
