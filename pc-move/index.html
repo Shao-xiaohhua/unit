@@ -20,8 +20,8 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 300px;
-    height: 300px;
+    width: 120px;
+    height: 120px;
     background: red;
     background-size: 100% 100%;
     z-index: 8888;
@@ -43,11 +43,50 @@
     color: #fff;
     font-size: 14px;
   }
+  .pc-wrap .clear-box {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    background: rgba(0, 0, 0, .3);
+    cursor: pointer;
+  }
+  .pc-wrap .clear-box:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: 2px;
+    background: #fff;
+    display: block;
+    margin: auto;
+    content: "";
+    transform: rotate(45deg);
+  }
+  .pc-wrap .clear-box:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: 2px;
+    background: #fff;
+    display: block;
+    margin: auto;
+    content: "";
+    transform: rotate(-45deg);
+  }
 </style>
 <body>
   <div class="pc-wrap">
-    <div class="iner-wrap"></div>
-    <div class="cont-name">欢迎关注上海法院12368微信公众号</div>
+    <div class="iner-wrap">
+      <div class="clear-box"></div>
+    </div>
+    <!-- <div class="cont-name">欢迎关注上海法院12368微信公众号</div> -->
   </div>
   <script src="jquery-1.11.3.js"></script>
   <script>
@@ -69,8 +108,10 @@
       var pcMove = function () {
         var left = move.offset().left;
         var top = move.offset().top;
+        var moveWidth = move.width() + 10;
+        var moveHeight = move.height() + 10;
         if (leftSwite === 'right') {
-          if (left > wWidth - 305) {
+          if (left > wWidth - moveWidth) {
             leftSwite = 'left';
           }
         } else {
@@ -79,7 +120,7 @@
           }
         }
         if (topSwite === 'down') {
-          if (top > (wHeight + scrollHeight) - 345) {
+          if (top > (wHeight + scrollHeight) - moveHeight) {
             topSwite = 'top'
           }
         } else {
@@ -106,6 +147,10 @@
       });
       move.on('mouseout', function () {
         t = setInterval(pcMove, 10);
+      });
+      $('.pc-wrap .clear-box').on('click', function () {
+        $(this).parent().parent().css({'display': 'none'});
+        clearInterval(t);
       });
     });
   </script>
